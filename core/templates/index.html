@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Career Roadmap</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        .roadmap {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f4f4f4;
+            white-space: pre-line;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>AI Career Roadmap Generator</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="current_career" placeholder="Your current career" required>
+        <input type="text" name="target_career" placeholder="Career you want to pivot to" required>
+        <button type="submit">Generate Roadmap</button>
+    </form>
+
+    {% if roadmap %}
+        <div class="roadmap">
+            <h2>Your Roadmap</h2>
+            <p>{{ roadmap }}</p>
+        </div>
+    {% endif %}
+
+</body>
+</html>
