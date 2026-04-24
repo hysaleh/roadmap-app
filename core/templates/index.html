@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>AI Career Roadmap</title>
+    <title>AI Career Next Step</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,7 +14,7 @@
             padding: 10px;
             margin-top: 10px;
         }
-        .roadmap {
+        .next_step {
             margin-top: 20px;
             padding: 15px;
             background: #f4f4f4;
@@ -24,19 +24,19 @@
 </head>
 <body>
 
-    <h1>AI Career Roadmap Generator</h1>
+    <h1>AI Career Next Step Generator</h1>
 
     <form method="POST">
         {% csrf_token %}
         <input type="text" name="current_career" placeholder="Your current career" required>
         <input type="text" name="target_career" placeholder="Career you want to pivot to" required>
-        <button type="submit">Generate Roadmap</button>
+        <button type="submit">Generate Next Step</button>
     </form>
 
-    {% if roadmap %}
-        <div class="roadmap">
-            <h2>Your Roadmap</h2>
-            <p>{{ roadmap }}</p>
+    {% if next_step %}
+        <div class="next_step">
+            <h2>Your Next Step</h2>
+            <p>{{ next_step }}</p>
         </div>
     {% endif %}
 
