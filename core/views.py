@@ -1,45 +1,60 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
+from google import genai
+
+API_CALL_COUNT = 0
+API_CALL_LIMIT = 5
+
+client = genai.Client(api_key=settings.GEMINI_API_KEY)
 
 
-def generate_fake_roadmap(current_career, target_career):
-    # Simple simulated "AI" output
-    return f"""
-Step 1: Understand the fundamentals of {target_career}.
-- Research what skills are required.
-- Compare with your current experience in {current_career}.
+def generate_next_step(current_career, target_career):
+    global API_CALL_COUNT
 
-Step 2: Skill Gap Analysis
-- Identify missing skills.
-- Start with beginner-friendly resources (YouTube, blogs, docs).
+    if API_CALL_COUNT >= API_CALL_LIMIT:
+        return "API limit reached."
 
-Step 3: Build Projects
-- Create 2–3 small projects related to {target_career}.
-- Showcase transferable skills from {current_career}.
+    API_CALL_COUNT += 1
 
-Step 4: Networking
-- Join communities in {target_career}.
-- Connect with professionals on LinkedIn.
+    prompt = f"""
+You are a strict career decision engine.
 
-Step 5: Apply for Roles
-- Tailor your resume highlighting transition from {current_career}.
-- Apply consistently and iterate.
+Current career: {current_career}
+Target career: {target_career}
 
-Step 6: Keep Improving
-- Learn from rejections.
-- Continue building and refining your portfolio.
+Return ONLY ONE next step.
+
+Rules:
+- 1–5 day execution window
+- must produce a tangible deliverable
+- no vague advice
+
+Format:
+
+Next Step:
+Why:
+Unlocks:
+Avoid:
 """
+
+    response = client.models.generate_content(
+        model="gemini-2.0-flash",
+        contents=prompt
+    )
+
+    return response.text
 
 
 @csrf_exempt
 def index(request):
-    roadmap = None
+    next_step = None
 
     if request.method == "POST":
         current_career = request.POST.get("current_career")
         target_career = request.POST.get("target_career")
 
         if current_career and target_career:
-            roadmap = generate_fake_roadmap(current_career, target_career)
+            next_step = generate_next_step(current_career, target_career)
 
-    return render(request, "index.html", {"roadmap": roadmap})
+    return render(request, "index.html", {"next_step": next_step})
