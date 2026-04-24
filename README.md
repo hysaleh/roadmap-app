@@ -13,7 +13,7 @@ This is a Django-based web application that uses a large language model (Google 
 Structured AI response containing:
 - Next Step (single action item with specific steps to take)
 - Description of why it works and what it unlocks
----
+
 ## Architecture
 Frontend (Django Template)
 ↓
