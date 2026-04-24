@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Career Pivot AI</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 0; background: #0f172a; color: #e2e8f0; }
+.container { max-width: 900px; margin: auto; padding: 20px; }
+.card { background: #1e293b; padding: 20px; border-radius: 12px; margin-bottom: 20px; }
+input, select, textarea { width: 100%; padding: 10px; margin-top: 8px; margin-bottom: 16px; border-radius: 8px; border: none; }
+button { padding: 12px 20px; border: none; border-radius: 8px; background: #38bdf8; color: black; font-weight: bold; cursor: pointer; }
+.phase { border-left: 4px solid #38bdf8; padding-left: 10px; margin-top: 10px; }
+.small { color: #94a3b8; font-size: 0.9em; }
+.toggle { cursor: pointer; color: #38bdf8; }
+.hidden { display: none; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>AI Career Pivot Nextstep</h1>
+
+<div class="card">
+<h2>Input</h2>
+<label>Target Career</label>
+<input id="goal" placeholder="e.g. Software Engineer">
+
+<label>Current Skill Level</label>
+<select id="level">
+<option>Absolute Beginner</option>
+<option>Beginner</option>
+
+<option>Intermediate</option>
+<option>Advanced</option>
+</select>
+
+<label>Time Availability (hrs/week)</label>
+<input id="time" type="number">
+
+<label>Constraints</label>
+<textarea id="constraints" placeholder="e.g. full-time job, no degree"></textarea>
+
+<label>Risk Tolerance</label>
+<select id="risk">
+<option>Low</option>
+<option>Medium</option>
+<option>High</option>
+</select>
+
+<button onclick="generate()">Generate Next Step</button>
+</div>
+
+<div id="output"></div>
+</div>
+
+<script>
+function generate() {
+  const goal = document.getElementById('goal').value;
+  const level = document.getElementById('level').value;
+  const time = document.getElementById('time').value;
+
+  const output = document.getElementById('output');
+
+  output.innerHTML = `
+  <div class="card">
+    <h2>Executive Summary</h2>
+    <p>You are targeting <b>${goal}</b>. Based on your inputs, the optimal path prioritizes speed-to-skill and portfolio proof over credentials.</p>
+    <p class="small">Estimated timeline: 4–8 months</p>
+  </div>
+
+  <div class="card">
+    <h2>Strategic Path</h2>
+    <p>You are NOT taking a traditional education route due to time constraints. Instead, this plan emphasizes project-based validation and rapid iteration.</p>
+  </div>
+
+  <div class="card">
+    <h2>Tactical Plan</h2>
+
+    <div class="phase">
+      <h3 onclick="toggle(this)">Phase 1: Foundation (2–4 weeks)</h3>
+      <div class="hidden">
+        <ul>
+          <li>Learn core concepts</li>
+          <li>Complete 2 guided exercises</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase">
+      <h3 onclick="toggle(this)">Phase 2: Proof of Skill</h3>
+      <div class="hidden">
+        <ul>
+          <li>Build 2 portfolio projects</li>
+          <li>Deploy at least one live</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase">
+      <h3 onclick="toggle(this)">Phase 3: Market Entry</h3>
+      <div class="hidden">
+        <ul>
+          <li>Apply to 50+ roles</li>
+          <li>Practice interviews</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <h2>Adaptive Engine</h2>
+    <ul>
+      <li>If falling behind → reduce scope to minimum viable projects</li>
+      <li>If progressing fast → skip redundant learning phases</li>
+      <li>If failing interviews → inject targeted practice</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Predicted Bottlenecks</h2>
+    <ul>
+      <li>Inconsistent study schedule</li>
+      <li>Incomplete projects</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Proof-of-Work Generator</h2>
+    <ul>
+      <li>Project Idea: Build a real-world app in ${goal}</li>
+      <li>Resume Bullet: Developed and deployed production-ready applications</li>
+    </ul>
+  </div>
+  `;
+}
+
+function toggle(el) {
+  const next = el.nextElementSibling;
+  next.classList.toggle('hidden');
+}
+</script>
+</body>
+</html>
