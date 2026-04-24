@@ -4,7 +4,7 @@ from django.db import models
 from django.db import models
 
 
-class RoadmapRequest(models.Model):
+class NextStepRequest(models.Model):
     goal = models.TextField()
     level = models.CharField(max_length=100)
     time_commitment = models.CharField(max_length=100)
@@ -13,7 +13,7 @@ class RoadmapRequest(models.Model):
     stripe_session_id = models.CharField(max_length=255, null=True, blank=True)
 
     # Output
-    roadmap = models.TextField(null=True, blank=True)
+    next_step = models.TextField(null=True, blank=True)
 
     # Status tracking
     is_paid = models.BooleanField(default=False)
