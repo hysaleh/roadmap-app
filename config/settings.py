@@ -27,9 +27,9 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 SECRET_KEY = 'django-insecure-dpl+^sa_c_#wu0btz-5o37bx@id#j55=d_=7jc=icx3j#ms#!('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["localhost","127.0.0.1", "roadmap-app-wnqd.onrender.com"]
 
 
 # Application definition
