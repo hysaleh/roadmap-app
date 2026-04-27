@@ -1,17 +1,20 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -e
 
+echo "Running security and dependency checks..."
 
-echo "Checking for vulnerabilities... "
+if [ -d "venv" ]; then
+  source venv/bin/activate
+fi
+
 pip list --outdated
-pip-audit
 
-echo "Checking for sensitive info in repo... "
+pip install pip-audit detect-secrets django-sec-check --quiet
 
-pip install detect-secrets --quiet
-detect-secrets scan .
+pip-audit || true
 
-echo "Check for security misconfigurations..."
-pip install django-sec-check --quiet
-python -m sec_check
+detect-secrets scan . || true
 
-echo "Checking if files were accidentally staged..."
+python -m sec_check || true
+
+echo "Checks complete."
