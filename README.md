@@ -1,6 +1,4 @@
-# AI Career Next-Step Engine
-
-## Overview
+# BestStep: AI Career Next-Step Engine
 
 This is a Django-based web application that uses a large language model (Google Gemini API) to generate a single, high-confidence next actionable step for users transitioning between careers. Unlike traditional career roadmap tools that generate multi-step plans, this system is intentionally constrained to output **one executable action** designed to be completed within one week max.
 
@@ -15,16 +13,6 @@ Structured AI response containing:
 - Description of why it works and what it unlocks
 
 ## Architecture
-Frontend (Django Template)
-↓
-HTTP POST Request
-↓
-Django View (index)
-↓
-Prompt Construction Layer
-↓
-Google Gemini API (gemini-2.0-flash)
-↓
-Response Parsing
-↓
-Rendered HTML Output
+
+<img width="1024" height="1536" alt="image" src="https://github.com/user-attachments/assets/7ce77a5f-40f9-45cd-a201-b73f37882dce" />
+
