@@ -3,6 +3,12 @@ from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from google import genai
 
+import logging
+logger = logging.getLogger(__name__)
+
+print("VIEW HIT")
+logger.error("VIEW HIT")
+
 API_CALL_COUNT = 0
 API_CALL_LIMIT = 5
 
@@ -51,6 +57,8 @@ def index(request):
     next_step = None
 
     if request.method == "POST":
+        print("POST RECEIVED")
+        print("KEY:", settings.GEMINI_API_KEY)
         current_career = request.POST.get("current_career")
         target_career = request.POST.get("target_career")
 
