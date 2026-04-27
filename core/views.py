@@ -3,23 +3,32 @@ from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from google import genai
 
-import logging
-logger = logging.getLogger(__name__)
-
-print("VIEW HIT")
-logger.error("VIEW HIT")
-
+# -----------------------------
+# Simple rate limiter (in-memory, resets on deploy/restart)
+# -----------------------------
 API_CALL_COUNT = 0
 API_CALL_LIMIT = 5
 
-client = genai.Client(api_key=settings.GEMINI_API_KEY)
+
+# -----------------------------
+# Client factory (safe for server environments)
+# -----------------------------
+def get_client():
+    api_key = getattr(settings, "GEMINI_API_KEY", None)
+    if not api_key:
+        raise ValueError("GEMINI_API_KEY is not set in environment or settings")
+
+    return genai.Client(api_key=api_key)
 
 
+# -----------------------------
+# Core AI function
+# -----------------------------
 def generate_next_step(current_career, target_career):
     global API_CALL_COUNT
 
     if API_CALL_COUNT >= API_CALL_LIMIT:
-        return "API limit reached."
+        return "API limit reached. Try again later."
 
     API_CALL_COUNT += 1
 
@@ -44,6 +53,8 @@ Unlocks:
 Avoid:
 """
 
+    client = get_client()
+
     response = client.models.generate_content(
         model="gemini-2.0-flash",
         contents=prompt
@@ -52,17 +63,22 @@ Avoid:
     return response.text
 
 
+# -----------------------------
+# View
+# -----------------------------
 @csrf_exempt
 def index(request):
     next_step = None
 
     if request.method == "POST":
-        print("POST RECEIVED")
-        print("KEY:", settings.GEMINI_API_KEY)
         current_career = request.POST.get("current_career")
         target_career = request.POST.get("target_career")
 
         if current_career and target_career:
-            next_step = generate_next_step(current_career, target_career)
+            try:
+                next_step = generate_next_step(current_career, target_career)
+            except Exception as e:
+                print("AI ERROR:", str(e))
+                next_step = "Error generating response. Please try again."
 
     return render(request, "index.html", {"next_step": next_step})
