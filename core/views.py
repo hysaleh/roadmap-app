@@ -78,7 +78,10 @@ def index(request):
             try:
                 next_step = generate_next_step(current_career, target_career)
             except Exception as e:
+                print("AI ERROR:", repr(e))
+
                 print("AI ERROR:", str(e))
+
                 next_step = "Error generating response. Please try again."
 
     return render(request, "index.html", {"next_step": next_step})

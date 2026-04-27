@@ -41,7 +41,5 @@ fi
 echo "Running migrations..."
 python manage.py migrate
 
-
-
 echo " Setup complete."
 echo " Run server with: python manage.py runserver"

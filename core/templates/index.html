@@ -1,44 +1,137 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>AI Career Next Step</title>
+    <title>NextStep</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            max-width: 700px;
-            margin: 50px auto;
-            padding: 20px;
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #f7fbff;
+            color: #1a1a1a;
         }
-        input, button {
+
+        /* NAVBAR */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: white;
+            border-bottom: 1px solid #e6f0ff;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: #3399ff;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            text-align: center;
+            padding: 80px 20px 40px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 40px;
+        }
+
+        /* CARD */
+        .card {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        /* INPUTS */
+        input {
             width: 100%;
-            padding: 10px;
-            margin-top: 10px;
+            padding: 14px 16px;
+            margin-top: 15px;
+            border-radius: 30px;
+            border: 1px solid #d6e8ff;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.2s ease;
         }
-        .next_step {
+
+        input:focus {
+            border-color: #3399ff;
+            box-shadow: 0 0 0 3px rgba(51,153,255,0.15);
+        }
+
+        /* BUTTON */
+        button {
+            width: 100%;
+            padding: 14px;
             margin-top: 20px;
-            padding: 15px;
-            background: #f4f4f4;
-            white-space: pre-line;
+            border-radius: 30px;
+            border: none;
+            background: linear-gradient(135deg, #4da6ff, #3399ff);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
         }
+
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 15px rgba(51,153,255,0.3);
+        }
+
+        /* RESULT */
+        .next_step {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f0f7ff;
+            border-radius: 12px;
+            white-space: pre-line;
+            text-align: left;
+        }
+
+        .next_step h2 {
+            margin-top: 0;
+        }
+
     </style>
 </head>
 <body>
 
-    <h1>AI Career Next Step Generator</h1>
+    <div class="navbar">
+        <div class="logo">NextStep</div>
+    </div>
 
-    <form method="POST">
-        {% csrf_token %}
-        <input type="text" name="current_career" placeholder="Your current career" required>
-        <input type="text" name="target_career" placeholder="Career you want to pivot to" required>
-        <button type="submit">Generate Next Step</button>
-    </form>
+    <div class="hero">
+        <h1>Plan Your Next Career Move</h1>
+        <p>Tell us where you are and where you want to go — we'll give you the next step.</p>
 
-    {% if next_step %}
-        <div class="next_step">
-            <h2>Your Next Step</h2>
-            <p>{{ next_step }}</p>
+        <div class="card">
+            <form method="POST">
+                {% csrf_token %}
+                <input type="text" name="current_career" placeholder="Current career (e.g. Teacher)" required>
+                <input type="text" name="target_career" placeholder="Target career (e.g. Software Engineer)" required>
+                <button type="submit">Generate Next Step</button>
+            </form>
+
+            {% if next_step %}
+                <div class="next_step">
+                    <h2>Your Next Step</h2>
+                    <p>{{ next_step }}</p>
+                </div>
+            {% endif %}
         </div>
-    {% endif %}
+    </div>
 
 </body>
 </html>
