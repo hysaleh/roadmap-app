@@ -62,10 +62,6 @@ Avoid:
 
     return response.text
 
-
-# -----------------------------
-# View
-# -----------------------------
 @csrf_exempt
 def index(request):
     next_step = None

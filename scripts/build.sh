@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-#script for checking if roadmap-app is ready to be deployed safely.
 set -e
 
 echo "Starting build process..."
@@ -33,3 +32,9 @@ echo "Collecting static files..."
 python manage.py collectstatic --noinput
 
 echo "Build is complete!"
+
+
+
+
+
+#script for checking if roadmap-app is ready to be deployed safely.
