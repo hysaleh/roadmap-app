@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from google import genai
+import traceback
 
 # -----------------------------
 # Simple rate limiter (in-memory, resets on deploy/restart)
@@ -71,13 +72,13 @@ def index(request):
         target_career = request.POST.get("target_career")
 
         if current_career and target_career:
+
             try:
                 next_step = generate_next_step(current_career, target_career)
             except Exception as e:
-                print("AI ERROR:", repr(e))
-
-                print("AI ERROR:", str(e))
-
-                next_step = "Error generating response. Please try again."
+                print("AI ERROR TYPE:", type(e).__name__)
+                print("AI ERROR MESSAGE:", str(e))
+                traceback.print_exc()
+                next_step = f"AI ERROR: {type(e).__name__}: {str(e)}"
 
     return render(request, "index.html", {"next_step": next_step})
